@@ -20,11 +20,16 @@ const { dinosaurs, humans, movies } = require('./datasets/dinosaurs');
 
 // DATASET: kitties from ./datasets/kitties
 const kittyPrompts = {
-  orangePetNames() {
+  orangePetNames(kitties) {
     // Return an array of just the names of kitties who are orange e.g.
-        // ['Tiger', 'Snickers']
+        const kitten = kitties.reduce((arr, kitten) => {
+          if(kitten['color'] === 'orange') {
+            arr.push(kitten['name'])
+          }
+          return arr
+        }, []) 
 
-        /* CODE GOES HERE */
+        return kitten
 
     // Annotation:
     // Write your annotation here as a comment
@@ -33,7 +38,8 @@ const kittyPrompts = {
   sortByAge() {
     // Sort the kitties by their age
 
-    /* CODE GOES HERE */
+    const kitten = kitties.sort((a, b) => b.age - a.age)
+      return kitten
 
     // Annotation:
     // Write your annotation here as a comment
@@ -41,19 +47,12 @@ const kittyPrompts = {
 
   growUp() {
     // Return an array of kitties who have all grown up by 2 years e.g.
-    // [{
-    //   name: 'Felicia',
-    //   age: 4,
-    //   color: 'grey'
-    // },
-    // {
-    //   name: 'Tiger',
-    //   age: 7,
-    //   color: 'orange'
-    // },
-    // ...etc]
+    const kitten = kitties.map(cat => {
+      cat['age'] = cat['age'] + 2
+      return cat
+    })
 
-    /* CODE GOES HERE */
+    return kitten
   }
 };
 
@@ -475,7 +474,12 @@ const breweryPrompts = {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
 
-    /* CODE GOES HERE */
+    const beers = breweries.reduce((acc, beer) => {
+      acc +=  beer['beers'].length
+      return acc
+    }, 0)
+    
+    return beers;
 
     // Annotation:
     // Write your annotation here as a comment
@@ -484,14 +488,16 @@ const breweryPrompts = {
   getBreweryBeerCount() {
     // Return an array of objects where each object has the name of a brewery
     // and the count of the beers that brewery has e.g.
-    // [
-    //  { name: 'Little Machine Brew', beerCount: 12 },
-    //  { name: 'Ratio Beerworks', beerCount: 5},
-    // ...etc.
-    // ]
 
-    /* CODE GOES HERE */
+    const beers = breweries.reduce((acc, beer) => {
+      let name = beer['name']
+      let beerCount = beer['beers'].length
+      acc.push({name, beerCount})
 
+      return acc
+    },[])
+
+    return beers;
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -502,7 +508,8 @@ const breweryPrompts = {
     // given 'Ratio Beerworks', return 5
 
 
-    /* CODE GOES HERE */
+    const matchingBrewery = breweries.find(brewery => brewery['name'] === breweryName)
+      return matchingBrewery['beers'].length
 
     // Annotation:
     // Write your annotation here as a comment
@@ -513,7 +520,10 @@ const breweryPrompts = {
     // e.g.
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
 
-    /* CODE GOES HERE */
+    const getAllBeers = breweries.map((beerJoint) => beerJoint.beers)
+    const accessBeers = getAllBeers.flat()
+    const arrange = accessBeers.sort((a, b) => b.abv - a.abv )
+    return arrange[0]
 
     // Annotation:
     // Write your annotation here as a comment
